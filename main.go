@@ -4,14 +4,15 @@ import (
     "fmt"
     "github.com/gofiber/fiber/v2"
     "apitemplate/router"
+    "apitemplate/config"
 )
 
 
 func main() {
+    config.GetConfiguration()
     app := fiber.New()
 
     app.Get("/", func(c *fiber.Ctx) error {
-        fmt.Println("hello marco")
         return c.SendString("Hello, World!")
     })
 
