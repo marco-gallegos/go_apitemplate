@@ -8,15 +8,14 @@ import (
 )
 
 type Configuration struct {
-    dbName string
-    dbHost string
-    dbPort int
-    dbPassword string
-    dbUser string
+    DbName string
+    DbHost string
+    DbPort int
+    DbPassword string
+    DbUser string
 }
 
 func GetConfiguration() Configuration {
-    fmt.Println("runing configuration")
     godotenv.Load()
 
     dbUser := os.Getenv("DB_USER")
@@ -33,11 +32,11 @@ func GetConfiguration() Configuration {
     //fmt.Println(fmt.Sprintf("user %s", dbUser))
 
     var currentConfig = Configuration{
-        dbUser: dbUser,
-        dbPassword: dbPassword,
-        dbName: dbName,
-        dbPort: dbPort,
-        dbHost: dbHost,
+        DbUser: dbUser,
+        DbPassword: dbPassword,
+        DbName: dbName,
+        DbPort: dbPort,
+        DbHost: dbHost,
     }
 
     return currentConfig

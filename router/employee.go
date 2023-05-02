@@ -1,29 +1,27 @@
 package router
 
 import (
-    "fmt"
-    "github.com/gofiber/fiber/v2"
+	"apitemplate/handlers"
+	"database/sql"
+	"fmt"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 const routePrefix string = "employee"
 
-type Employee struct {
-    Id          int     `json:"id"`
-    Name        string  `json:"name"`
+type EmployeeRouter struct {
+    currentDb sql.DB
 }
 
 
-func getEmployees(c *fiber.Ctx) error {
-    var employees []Employee  = []Employee{
-        {
-            Id:12,
-            Name:"marco g",
-        },
-    }
+func (er *EmployeeRouter) getEmployees(c *fiber.Ctx) error {
+    employees := handlers.GetEmployees(er.currentDb)
     return c.JSON(employees)
 }
 
 
-func EmployeeRouter(router fiber.Router){
-    router.Get(fmt.Sprintf("%s", routePrefix), getEmployees)
+func RegisterEmployeeRoutes(router fiber.Router, currentDb sql.DB){
+    employeeRouter := EmployeeRouter{ currentDb: currentDb }
+    router.Get(fmt.Sprintf("%s", routePrefix), employeeRouter.getEmployees)
 }
